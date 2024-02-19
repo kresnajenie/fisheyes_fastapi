@@ -9,6 +9,7 @@ app = FastAPI()
 # You can use ["*"] to allow all origins
 origins = [
     "https://fishies.techkyra.com",
+    "https://basel.techkyra.com",
     "https://kresnajenie.github.io",
 ]
 
