@@ -1,7 +1,10 @@
 from fastapi import FastAPI, HTTPException
-import redis_test as re
+# import redis_test as re
+import mongo_test as mo
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+# from get_minio import download
+# import parse_h5
 
 app = FastAPI()
 
@@ -9,6 +12,7 @@ app = FastAPI()
 # You can use ["*"] to allow all origins
 origins = [
     "https://fishies.techkyra.com",
+    "https://edward.techkyra.com",
     "https://basel.techkyra.com",
     "https://kresnajenie.github.io",
 ]
@@ -32,15 +36,16 @@ async def read_root():
     return {"message": "Hello World!"}
 
 @app.get("/getdata")
-async def fetch_data(col: str):
+async def fetch_data(data: str, gene: str):
 # async def fetch_json():
-    return {"data": re.retrieve_from_redis(col)}
+    # print(data, gene)
+    return mo.retrieve_from_mongodb(data, gene)
 
 @app.post("/savedata")
 async def save_data(data: RedisData):
     # Use the function from your redis_test module to save data to Redis
     try:
-        re.save_to_redis(data.key, data.value)
-        return {"message": f"Data saved to Redis under key: {data.key}"}
+        mo.save_to_mongodb(data.data, data.value)
+        return {"message": f"Data saved to Redis under key: {data.value.key}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

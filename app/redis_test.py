@@ -1,33 +1,29 @@
 import redis
 import os
+from dotenv import load_dotenv
 
-# Connect to Redis
-# redis_client = redis.StrictRedis(host='localhost', port=6379, db=0)
-# redis_client = redis.StrictRedis(host='redis-14060.c326.us-east-1-3.ec2.cloud.redislabs.com', port=14060, db=0, password="qsFkNCM7CxGBQNliVx2ZmVTVcKoihLvR")
-redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
+# Load environment variables from .env file
+load_dotenv()
+
+# Initialize the Redis connection once, it will be switched to the correct db in the functions
+# redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379/0')  # Default to db 0
+# redis_url = os.getenv('REDIS_URL', 'redis://localhost:6379/0')  # Default to db 0
+redis_url = os.getenv("REDIS_URL")
 redis_client = redis.StrictRedis.from_url(redis_url)
-# redis_client = redis.StrictRedis(host='192.168.64.2', port=6379, db=0)
 
-# redis_client = redis.Redis(
-#   host='usw1-liked-emu-33798.upstash.io',
-#   port=33798,
-#   password='1d9190660a1042079c224cdd0bc0fff0'
-# )
-# Function to save data to Redis
-def save_to_redis(key, value):
+# Function to save data to Redis with database selection
+def save_to_redis(key, value, db=0):
+    # Switch to the specified database
+    redis_client.connection_pool.connection_kwargs['db'] = db
     redis_client.set(key, value)
 
-# Function to retrieve data from Redis
-def retrieve_from_redis(key):
+# Function to retrieve data from Redis with database selection
+def retrieve_from_redis(key, db=0):
+    # Switch to the specified database
+    redis_client.connection_pool.connection_kwargs['db'] = db
     return redis_client.get(key)
 
-# Example usage
-# retrieved_value = retrieve_from_redis('test_key')
-
-# if retrieved_value:
-#     print(f"Retrieved value: {retrieved_value.decode('utf-8')}")
-# else:
-#     print("No value found for the key.")
-
 if __name__ == "__main__":
-    save_to_redis("test", "hello")
+    # Example usage
+    save_to_redis("test", "hello", 1)
+    print(retrieve_from_redis("test", 1))
