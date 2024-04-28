@@ -26,9 +26,10 @@ app.add_middleware(
 )
 
 # Define a Pydantic model for the data we expect (key and value)
-class RedisData(BaseModel):
+class MongoData(BaseModel):
+    collection: str
     key: str
-    value: str
+    values: str
 
 
 @app.get("/")
@@ -42,10 +43,10 @@ async def fetch_data(data: str, gene: str):
     return mo.retrieve_from_mongodb(data, gene)
 
 @app.post("/savedata")
-async def save_data(data: RedisData):
+async def save_data(data: MongoData):
     # Use the function from your redis_test module to save data to Redis
     try:
-        mo.save_to_mongodb(data.data, data.value)
-        return {"message": f"Data saved to Redis under key: {data.value.key}"}
+        mo.save_to_mongodb(data.collection, data.key, data.values)
+        return {"message": f"Data saved to Mongo under key: {data.key}"}
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))

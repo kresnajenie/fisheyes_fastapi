@@ -10,10 +10,13 @@ mongo_url = os.getenv("MONGO_URL", "mongodb://rootuser:rootpass@localhost:27017/
 mongo_client = MongoClient(mongo_url)
 
 # Function to save data to MongoDB with dynamic database and collection selection
-def save_to_mongodb(collection_name, document, db_name="genedata"):
+def save_to_mongodb(collection_name, _id, values, db_name="genedata"):
     db = mongo_client[db_name]
     collection = db[collection_name]
-    collection.insert_one(document)
+    collection.insert_one({
+        "_id": _id,
+        "values": values
+    })
 
 # Function to retrieve data from MongoDB with dynamic database and collection selection
 def retrieve_from_mongodb(collection_name, document_id, db_name="genedata"):

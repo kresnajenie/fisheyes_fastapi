@@ -1,8 +1,60 @@
 import requests
+import json
 
-
-url = 'https://fisheyes.techkyra.com/savedata'
-data = {'key': 'genes', 'value': 'test'}
+# url = 'https://fisheyes.techkyra.com/savedata'
+colors = {'Epidermis': '#ffff00',
+ 'Neural Crest': '#1ce6ff',
+ 'EVL/Periderm': '#ff34ff',
+ 'Telencephalon Dorsal': '#ff4a46',
+ 'Hindbrain R5+6': '#008941',
+ 'Hindbrain R3+4': '#006fa6',
+ 'Hindbrain R1+2': '#a30059',
+ 'EVL + autofluorescence': '#ffdbe5',
+ 'Hindbrain R7': '#7a4900',
+ 'Placode Otic': '#0000a6',
+ 'Heart Primordium - anterior': '#63ffac',
+ 'Midbrain': '#b79762',
+ 'Cephalic Mesoderm - middle': '#004d43',
+ 'Placode Lens': '#8fb0ff',
+ 'Spinal Cord': '#997d87',
+ 'YSL': '#5a0007',
+ 'Diencephalon': '#809693',
+ 'Pronephros - posterior': '#6a3a4c',
+ 'Tailbud - dorsal peripheral': '#1b4400',
+ 'Tailbud - dorsal core': '#4fc601',
+ 'Notochord Posterior Tip - posterior': '#3b5dff',
+ 'PSM Intermediate': '#4a3b53',
+ 'Pronephros - anterior': '#ff2f80',
+ 'Spinal Cord Differentiated': '#61615a',
+ 'Somites Formed': '#ba0900',
+ 'Placode Epibranchial': '#6b7900',
+ 'Cranial Ganglion': '#00c2a0',
+ 'Ventral LPM': '#ffaa92',
+ 'Tailbud - ventral core': '#ff90c9',
+ 'Floor Plate - Spinal Cord': '#b903aa',
+ 'Hindbrain Neurons': '#d16100',
+ 'Placode Trigeminal': '#ddefff',
+ 'Optic Cup': '#000035',
+ 'Hematopoeitic (ICM)': '#7b4f4b',
+ 'Somites Forming': '#a1c299',
+ 'Heart Primordium - posterior': '#300018',
+ 'Tailbud - ventral peripheral': '#0aa6d8',
+ 'Adaxial Cells - Tailbud': '#013349',
+ 'Prechordal Plate': '#00846f',
+ 'Primordial Germ Cells': '#372101',
+ 'Forebrain Ventral': '#ffb500',
+ 'Endoderm Pancreatic/Intestinal': '#c2ffed',
+ 'Hematopoeitic (RBI)': '#a079bf',
+ 'Cephalic Mesoderm - anterior': '#cc0744',
+ 'Adaxial Cells - Somite': '#c0b9b2',
+ 'Notochord Posterior Tip - anterior': '#c2ff99',
+ 'Adaxial Cells - PSM': '#001e09',
+ 'Cephalic Mesoderm - posterior': '#00489c',
+ 'Endoderm Pharyngeal': '#6f0062',
+ 'Notochord Anterior': '#0cbd66',
+ 'Floor Plate - Hindbrain Region': '#eec3ff'}
+url = 'http://localhost:8000/savedata'
+data = {'collection': 'genes', 'key': "clusters_pal", 'values': json.dumps(colors)}
 
 response = requests.post(url, json=data)
 print(response.json())
