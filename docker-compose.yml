@@ -5,21 +5,5 @@ services:
     image: izjenie/fisheyes_fastapi
     ports:
       - "8000:80"
-    depends_on:
-      - mongodb
     environment:
       - MONGO_URL=mongodb://rootuser:rootpass@mongodb:27017/
-
-  mongodb:
-    image: mongo:latest
-    ports:
-      - "27017:27017"
-    environment:
-      - MONGO_INITDB_ROOT_USERNAME=rootuser
-      - MONGO_INITDB_ROOT_PASSWORD=rootpass
-    volumes:
-      - mongodata:/data/db
-
-volumes:
-  mongodata:
-    driver: local

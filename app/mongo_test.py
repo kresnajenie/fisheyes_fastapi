@@ -6,7 +6,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Initialize MongoDB client
-mongo_url = os.getenv("MONGO_URL", "mongodb://rootuser:rootpass@localhost:27017/")
+# mongo_url = os.getenv("MONGO_URL", "mongodb://rootuser:rootpass@localhost:27017/")
+# mongo_url = os.getenv("MONGO_URL", "mongodb://localhost:27017/")
+mongo_url = os.getenv("MONGO_URL", "mongodb://cmm200-136.ucsd.edu:27017/")
 mongo_client = MongoClient(mongo_url)
 
 # Function to save data to MongoDB with dynamic database and collection selection

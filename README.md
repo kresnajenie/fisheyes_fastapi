@@ -52,4 +52,10 @@ mongorestore --uri="mongodb://rootuser:rootpass@localhost:27017/genedata?authSou
 ### Restore a collection
 ```bash
 mongoimport --uri="mongodb://rootuser:rootpass@localhost:27017/genedata?authSource=admin" --collection=genes --file=newgenes.json --jsonArray --mode=upsert
+mongoimport --uri="mongodb://rootuser:rootpass@localhost:27017/genedata?authSource=admin" --collection=75pe --file=75pe.json --mode=upsert
+```
+
+## To check stuff
+```bash
+mongosh "mongodb://rootuser:rootpass@localhost:27017/genedata?authSource=admin"
 ```
